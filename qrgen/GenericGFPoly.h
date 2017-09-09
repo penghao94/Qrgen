@@ -26,7 +26,7 @@ namespace qrgen {
 	*/
 	class  GenericGFPoly final {
 	private:
-		static GenericGF *field;
+		static GenericGF field;
 		static std::vector<int> coeff;
 		static GenericGFPoly *zero;
 		static GenericGFPoly *one;
@@ -40,8 +40,8 @@ namespace qrgen {
 		* or if leading coefficient is 0 and this is not a
 		* constant polynomial (that is, it is not the monomial "0")
 		*/
-		GenericGFPoly(qrgen::GenericGF *field, std::vector<int> &coef);
-		~GenericGFPoly() { delete field; field = NULL; coeff.clear(); coeff.swap(std::vector<int>()); }
+		GenericGFPoly(qrgen::GenericGF field, std::vector<int> &coef);
+		~GenericGFPoly() { coeff.clear(); coeff.swap(std::vector<int>()); }
 
 		GenericGFPoly * getZero();
 
@@ -84,9 +84,9 @@ namespace qrgen {
 		std::string to_string();
 	};
 
-	inline qrgen::GenericGFPoly::GenericGFPoly(qrgen::GenericGF *field, std::vector<int> &coef)
+	inline qrgen::GenericGFPoly::GenericGFPoly(qrgen::GenericGF field, std::vector<int> &coef)
 	{
-		assert(coef.size() == 0, "Illegal Argument Exception!!!");
+		assert((coef.size() == 0)&& "Illegal Argument Exception!!!");
 
 		this->field = field;
 
@@ -128,13 +128,13 @@ namespace qrgen {
 		}
 
 		int result = coeff[0];
-		for (int c : coeff) result = GenericGF::add_or_sub(field->multiply(a, result), c);
+		for (int c : coeff) result = GenericGF::add_or_sub(field.multiply(a, result), c);
 		return result;
 	}
 
 	inline GenericGFPoly* GenericGFPoly::add_or_sub(GenericGFPoly* other)
 	{
-		assert(typeid(field) == typeid(other), "GenericGFPolys do not have same GenericGF field !!!");
+		assert((typeid(field) == typeid(other))&& "GenericGFPolys do not have same GenericGF field !!!");
 		
 		if (isZero()) {
 			return other;
@@ -163,14 +163,14 @@ namespace qrgen {
 		
 		int size = coeff.size();
 		std::vector<int> product(size);
-		for (int i = 0; i < size; i++) product[i] = field->multiply(coeff[i], scalar);
+		for (int i = 0; i < size; i++) product[i] = field.multiply(coeff[i], scalar);
 
 		return new GenericGFPoly(field, product);
 	}
 
 	inline GenericGFPoly * GenericGFPoly::multiply(GenericGFPoly * other)
 	{
-		assert(typeid(field) == typeid(other), "GenericGFPolys do not have same GenericGF field !!!");
+		assert((typeid(field) == typeid(other))&& "GenericGFPolys do not have same GenericGF field !!!");
 		if (isZero() || other->isZero()) return getZero();
 
 		std::vector<int> acoeff = this->coeff;
@@ -184,38 +184,38 @@ namespace qrgen {
 		{
 			int ac = acoeff[i];
 			for (int j = 0; j < bsize; j++) {
-				product[i + j] = qrgen::GenericGF::add_or_sub(product[i + j], field->multiply(ac, bcoeff[j]));
+				product[i + j] = qrgen::GenericGF::add_or_sub(product[i + j], field.multiply(ac, bcoeff[j]));
 			}
 		}
 	}
 
 	inline GenericGFPoly * GenericGFPoly::multiply_by_monomial(const int d, const int c)
 	{
-		assert(d < 0, "Illegal Argument Exception!!!");
+		assert((d < 0)&& "Illegal Argument Exception!!!");
 
 		if (c == 0)	return getZero();
 
 		int size = coeff.size();
 		std::vector<int> product (size + d);
-		for (int i = 0; i < size; i++) product[i] = field->multiply(coeff[i], c);
+		for (int i = 0; i < size; i++) product[i] = field.multiply(coeff[i], c);
 
 		return new GenericGFPoly(field, product);
 	}
 
 	inline std::vector<GenericGFPoly*> GenericGFPoly::divide(GenericGFPoly * other)
 	{
-		assert(typeid(field) == typeid(other), "GenericGFPolys do not have same GenericGF field !!!");
-		assert(other->isZero(), "Divide by 0!!!");
+		assert((typeid(field) == typeid(other))&& "GenericGFPolys do not have same GenericGF field !!!");
+		assert((other->isZero())&& "Divide by 0!!!");
 
 		GenericGFPoly *qut = getZero();
 		GenericGFPoly *rem = this;
 
 		int denomin = other->getCoeff(other->getDegree());
-		int inverse_denomin = field->inverse(denomin);
+		int inverse_denomin = field.inverse(denomin);
 
 		while (rem->getDegree()>=other->getDegree()&&rem->isZero()){
 			int degreeDiff = rem->getDegree() - other->getDegree();
-			int scale = field->multiply(rem->getDegree(), inverse_denomin);
+			int scale = field.multiply(rem->getDegree(), inverse_denomin);
 
 			GenericGFPoly *term = other->multiply_by_monomial(degreeDiff, scale);
 			GenericGFPoly *iter_qut = buildMonomial(degreeDiff, scale);
@@ -227,7 +227,7 @@ namespace qrgen {
 
 	inline GenericGFPoly * GenericGFPoly::buildMonomial(int d, int c)
 	{
-		assert(d < 0, "Illegal Argument Exception!!!");
+		assert((d < 0)&& "Illegal Argument Exception!!!");
 
 		if (c == 0) return zero;
 
@@ -252,7 +252,7 @@ namespace qrgen {
 				else if (index > 0) str += "+";
 
 				if (d == 0 || c != 1) {
-					int ap = field->log(c);
+					int ap = field.log(c);
 
 					if (ap == 0) str += "1";
 					else if (ap == 1) str += "a";

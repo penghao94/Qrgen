@@ -13,7 +13,7 @@ qrgen::GenericGFPoly * qrgen::RSencoder::buildGenerator(int d)
 	return cacheGen[d];
 }
 
-qrgen::RSencoder::RSencoder(GenericGF * field)
+qrgen::RSencoder::RSencoder(GenericGF field)
 {
 	this->field = field;
 	this->cacheGen.push_back(new GenericGFPoly(field, std::vector<int>{1}));
@@ -21,10 +21,10 @@ qrgen::RSencoder::RSencoder(GenericGF * field)
 
 void qrgen::RSencoder::encode(std::vector<int>& E, int ecBytes)
 {
-	assert(ecBytes, "No error correction bytes!!!");
+	assert((ecBytes==0)&& "No error correction bytes!!!");
 
 	int dataBytes = E.size() - ecBytes;
-	assert(dataBytes <= 0, "No data bytes provided!!!");
+	assert((dataBytes <= 0)&& "No data bytes provided!!!");
 
 	GenericGFPoly *gen = buildGenerator(ecBytes);
 

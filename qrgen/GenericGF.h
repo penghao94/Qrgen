@@ -60,6 +60,7 @@ namespace qrgen {
 	*b			the factor b in the generator polynomial can be 0- or 1-based (g(x) = (x+a^b)(x+a^(b+1))...(x+a^(b+2t-1))). In most cases it should be 1, but for QR code it is 0.
 	*/
 	public:
+		GenericGF() { size = 0, primitive = 0,geneBase=0; }
 		GenericGF(int primitive, int size, int b);
 		~GenericGF() {
 			expTab.clear(); expTab.swap(std::vector<int>());  logTab.clear(); logTab.swap(std::vector<int>());
