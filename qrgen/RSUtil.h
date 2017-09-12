@@ -21,6 +21,6 @@ namespace qrgen {
 	* len		length
 	* num_Ecb	number of error correction bytes
 	*/
-	Bytes geneECBytes(RSencoder encoder, Bytes dBytes, int pos, int len, int num_Ecb);
+	Bytes geneECBytes(RSencoder encoder, const Bytes &dBytes, int pos, int len, int num_Ecb);
 }
 #endif // !RSUTIL_H

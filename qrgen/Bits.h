@@ -14,7 +14,7 @@
 #include "Version.h"
 #include "Level.h"
 namespace qrgen {
-	typedef std::vector<unsigned char> Bytes;
+	typedef std::vector<uint8_t> Bytes;
 
 	class Bits {
 	private:

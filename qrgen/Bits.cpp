@@ -2,7 +2,7 @@
 #include <vector>
 #include "Reed_Solomon_encoder.h"
 #include "RSUtil.h"
-typedef std::vector<unsigned char> Bytes;
+typedef std::vector<uint8_t> Bytes;
 
 void qrgen::Bits::append(bool bit)
 {

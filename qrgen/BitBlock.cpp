@@ -23,7 +23,7 @@ qrgen::BitBlock::BitBlock(int num_dBytes, int num_cBytes, RSencoder encoder, Byt
 	maskMatrix.resize(num_dBytes * 8);
 	for (int i = 0; i < num_dBytes * 8; i++) {
 		maskMatrix[i].resize(num_dBytes + num_cBytes);
-		maskMatrix[i][i / 8] = (unsigned char)(1 << (7 - i % 8));
+		maskMatrix[i][i / 8] = (uint8_t)(1 << (7 - i % 8));
 		checkBytes = geneECBytes(encoder, maskMatrix[i], 0, num_dBytes, num_cBytes);
 		copy(checkBytes.begin(),checkBytes.end(),maskMatrix[i].begin()+num_dBytes);//copy(a.begin(),a.end(),b.begin());
 	}
@@ -39,7 +39,7 @@ void qrgen::BitBlock::check()
 }
 /*index=5 value=1 bb[0]=01010101  bb'[0]=00010101
 */
-void qrgen::BitBlock::reset(int index, unsigned char value)
+void qrgen::BitBlock::reset(int index, uint8_t value)
 {
 	if (((blockBytes[index / 8] >> (7 - index & 0x7)) & 0x1) == (value & 0x1))// already has desired bit
 		return;
@@ -57,7 +57,7 @@ void qrgen::BitBlock::reset(int index, unsigned char value)
 	assert("reset of unset bit");
 }
 
-bool qrgen::BitBlock::canSet(int index, unsigned char value)
+bool qrgen::BitBlock::canSet(int index, uint8_t value)
 {
 	bool found = false;
 	for (int j = 0; j < maskIndex; j++) {

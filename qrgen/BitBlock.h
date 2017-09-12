@@ -9,11 +9,14 @@
 
 #ifndef BITBLOCK_H
 #define BITBLOCK_H
+
+//#include <cstdint>
 #include <vector>
+
 #include "Reed_Solomon_encoder.h"
 namespace qrgen {
 
-	typedef std::vector<unsigned char> Bytes;
+	typedef std::vector<uint8_t> Bytes;
 
 	class BitBlock {
 	private:
@@ -37,9 +40,9 @@ namespace qrgen {
 
 		void check();
 
-		void reset(int index, unsigned char value);
+		void reset(int index, uint8_t value);
 
-		bool canSet(int index, unsigned char value);
+		bool canSet(int index, uint8_t value);
 
 		void copyOut();
 

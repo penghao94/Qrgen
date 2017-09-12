@@ -26,7 +26,7 @@ namespace qrgen {
 		Pixel pixel;
 
 		/*What's the fuck ?*/
-		unsigned char target;
+		uint8_t target;
 
 		/*I don't know what's the fuck, may be I will know in the future*/
 		int ditherTarget;
@@ -53,7 +53,7 @@ namespace qrgen {
 		*/
 		PixelInfo() { x = 0, y = 1, ditherTarget = 0, contrast = 0, hardZero = false, bitIndex = 0; }
 		
-		PixelInfo(int x, int y, Pixel p, unsigned char t, int c) { this->x = x; this->y = y; pixel = p; target = t; contrast = c; }
+		PixelInfo(int x, int y, Pixel p, uint8_t t, int c) { this->x = x; this->y = y; pixel = p; target = t; contrast = c; }
 
 		/*fucking getter and setter*/
 		PROPERTY(int, X, x);
@@ -62,7 +62,7 @@ namespace qrgen {
 
 		PROPERTY(Pixel, Pixel, pixel);
 		
-		PROPERTY(unsigned char, Tatget, target);
+		PROPERTY(uint8_t, Tatget, target);
 
 		PROPERTY(BitBlock, Block, block);
 
