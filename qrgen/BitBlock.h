@@ -34,7 +34,7 @@ namespace qrgen {
 	public:
 		/*constructor*/
 		BitBlock() {}
-		BitBlock(int num_dBytes, int num_cBytes, RSencoder encoder, Bytes &pridBytes, int pridIndex, Bytes &pricBytes, int pricIndex);
+		BitBlock(int num_dBytes, int num_cBytes, RSencoder &encoder, Bytes &pridBytes, int pridIndex, Bytes &pricBytes, int pricIndex);
 		~BitBlock() { pridBytes.swap(Bytes()); pricBytes.swap(Bytes()); maskMatrix.swap(std::vector<Bytes>()); }
 		Bytes getBlockBytes() { return blockBytes; }
 
@@ -43,6 +43,7 @@ namespace qrgen {
 		void reset(int index, uint8_t value);
 
 		bool canSet(int index, uint8_t value);
+		bool isEmpty();
 
 		void copyOut();
 

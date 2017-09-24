@@ -2,7 +2,7 @@
 #include<algorithm>
 #include "RSUtil.h"
 
-qrgen::BitBlock::BitBlock(int num_dBytes, int num_cBytes, RSencoder encoder, Bytes & pridBytes, int pridIndex, Bytes & pricBytes, int pricIndex)
+qrgen::BitBlock::BitBlock(int num_dBytes, int num_cBytes, RSencoder &encoder, Bytes & pridBytes, int pridIndex, Bytes & pricBytes, int pricIndex)
 {
 	this->num_dBytes = num_dBytes;
 	this->num_cBytes = num_cBytes;
@@ -21,6 +21,8 @@ qrgen::BitBlock::BitBlock(int num_dBytes, int num_cBytes, RSencoder encoder, Byt
 	assert((expCheckBytes != checkBytes) && "check data not match");
 
 	maskMatrix.resize(num_dBytes * 8);
+	maskIndex = maskMatrix.size();
+
 	for (int i = 0; i < num_dBytes * 8; i++) {
 		maskMatrix[i].resize(num_dBytes + num_cBytes);
 		maskMatrix[i][i / 8] = (uint8_t)(1 << (7 - i % 8));
@@ -82,13 +84,13 @@ bool qrgen::BitBlock::canSet(int index, uint8_t value)
 	//subtract from saved-away rows too
 	Bytes target = maskMatrix[0];
 	for (int i = maskIndex; i < maskMatrix.size(); i++) {
-		Bytes row = maskMatrix[i];
+		
 
-		if ((row[index / 8] & (1 << (7 - index & 7))) == 0) 
+		if ((maskMatrix[i][index / 8] & (1 << (7 - index & 7))) == 0)
 			continue;
 		
-		for (int k = 0; k < row.size(); k++) 
-			row[k] ^= target[k];
+		for (int k = 0; k < maskMatrix[i].size(); k++)
+			maskMatrix[i][k]= target[k];
 	}
 
 	// Found a row with bit #bi == 1 and cut that bit from all the others.
@@ -107,6 +109,12 @@ bool qrgen::BitBlock::canSet(int index, uint8_t value)
 			assert("did not reduce");
 		}
 	}
+	return true;
+}
+
+bool qrgen::BitBlock::isEmpty()
+{
+	return (pricBytes.size() == 0 && pridBytes.size() == 0) ? true : false;
 }
 
 void qrgen::BitBlock::copyOut()

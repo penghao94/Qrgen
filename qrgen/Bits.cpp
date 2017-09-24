@@ -2,6 +2,7 @@
 #include <vector>
 #include "Reed_Solomon_encoder.h"
 #include "RSUtil.h"
+#include "GFObject.h"
 typedef std::vector<uint8_t> Bytes;
 
 void qrgen::Bits::append(bool bit)
@@ -64,7 +65,7 @@ void qrgen::Bits::addCheckBytes(Version * ver, LEVEL lvl)
 	int npb_dBytes = num_dBytes / lvlinfo.num_of_block;
 	int num_extras = npb_dBytes % lvlinfo.num_of_block;
 
-	RSencoder rs(GenericGF::QR_CODE_FIELD_256);
+	RSencoder rs(gfobj::QR_CODE_FIELD_256);
 
 	int dataIndex = 0;
 	for (int i = 0; i < lvlinfo.num_of_block; i++) {

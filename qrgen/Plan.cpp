@@ -278,6 +278,27 @@ qrgen::Plan * qrgen::Plan::newPlan(Version* v, LEVEL l, Mask* m)
 	return p;
 }
 
+qrgen::QRCode qrgen::Plan::encode(Plan * plan, Encoding & encode1, Encoding & encode2)
+{
+	Bits bits;
+	std::string err = encode1.validate();
+	assert((err == "") && "encoding check error");
+	encode1.encode(bits, plan->getVersion());
+
+    err = encode2.validate();
+	assert((err == "") && "encoding check error");
+	encode2.encode(bits, plan->getVersion());
+
+	if (bits.getSize() > plan->getdBytesNum() * 8) 
+		assert("Can not encode!!");
+
+	bits.addCheckBytes(plan->getVersion(), plan->getLevel());
+	Bytes bytes = bits.getBits();
+	MatrixP pixels = plan->getPixels();
+
+	return { bytes,pixels };
+}
+
 void qrgen::Plan::setPosBox(std::vector<VectorP>&pixels, int x, int y){
 	Pixel pw(Pixel::PixelRole::POSITION);
 	Pixel pb(Pixel::PixelRole::POSITION);

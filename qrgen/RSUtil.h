@@ -1,3 +1,4 @@
+
 // This project is a C++ version of qart4j,for more information see https://github.com/dieforfree/qart4j
 // 
 // Copyright (C) 2017 Swanny Peng <ph1994wh@gmail.com>

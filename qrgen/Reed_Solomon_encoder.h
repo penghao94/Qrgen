@@ -12,6 +12,7 @@
 #include "GenericGF.h"
 #include "GenericGFPoly.h"
 #include <vector>
+#include <algorithm>
 namespace qrgen {
 	/**
 	* <p>Implements Reed-Solomon enbcoding, as the name implies.</p>

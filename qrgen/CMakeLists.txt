@@ -10,6 +10,7 @@ Level.h
 Mask.h
 Number.h
 Pixel.h
+PixelOrder.h
 Plan.h
 Property.h
 QRCode.h

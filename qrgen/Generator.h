@@ -9,14 +9,23 @@
 
 #ifndef GENERATOR_H_
 #define GENERATOR_H_
+
+#include<limits.h>
+
 #include<vector>
 #include<string>
-
+#include<algorithm>
+#include "GFObject.h"
 #include "Property.h"
 #include "Pixel.h"
 #include "PixelInfo.h"
+#include "PixelOrder.h"
 #include "Plan.h"
 #include "QRCode.h"
+#include "Bits.h"
+#include "Reed_Solomon_encoder.h"
+#include "Raw.h"
+#include "Number.h"
 typedef std::vector<uint8_t> Bytes;
 
 namespace qrgen {
@@ -80,9 +89,11 @@ namespace qrgen {
 		PROPERTY(Bytes&, Control, control);
 		
 		/* return average and variance at (x,y) with range */
-		Target Target(int x, int y);
+		Target targt(int x, int y);
 
-		void rotate(Plan &plan, int rotation);
+		void rotate(Plan *plan, int rotation);
+
+		
 
 		QRCode encode();
 

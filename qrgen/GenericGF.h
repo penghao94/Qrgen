@@ -42,16 +42,7 @@ namespace qrgen {
 	     int geneBase;
 		
 		/* Typical encoding generator */
-	public:
-		const static GenericGF AZTEC_DATA_12; // x^12 + x^6 + x^5 + x^3 + 1
-		const static GenericGF AZTEC_DATA_10; // x^10 + x^3 + 1
-		const static GenericGF AZTEC_DATA_6;  // x^6 + x + 1
-		const static GenericGF AZTEC_PARAM;   // x^4 + x + 1
-		const static GenericGF QR_CODE_FIELD_256; // x^8 + x^4 + x^3 + x^2 + 1
-		const static GenericGF DATA_MATRIX_FIELD_256; // x^8 + x^5 + x^3 + x^2 + 1
-		//const static GenericGF AZTEC_DATA_8 = DATA_MATRIX_FIELD_256;
-	    //const static GenericGF MAXICODE_FIELD_64= AZTEC_DATA_6;
-		
+	public:	
 	/*
 	* Create a representation of GF(size) using the given primitive polynomial.
 	*
@@ -72,10 +63,10 @@ namespace qrgen {
 		int exp(const int a) { return expTab[a]; }
 
 		 /*base 2 log of a in GF(size)*/
-		int log(const int a) { assert(a == 0, "Illegal Argument Exception!!!"); return logTab[a]; }
+		int log(const int a) { assert(!(a == 0)&&"Illegal Argument Exception!!!"); return logTab[a]; }
 
 		 /*multiplicative inverse of a*/
-		int inverse(const int a) { assert(a == 0, "Arithmetic Exception"); return expTab[size - 1 - logTab[a]]; }
+		int inverse(const int a) { assert(!(a == 0)&& "Arithmetic Exception!!"); return expTab[size - 1 - logTab[a]]; }
 
 		 /*product of a an d b in GF(size)*/
 		int multiply(const int a, const int b){ return (a == 0 || b == 0) ? 0 : expTab[(logTab[a] + logTab[b]) % (size - 1)]; }
@@ -87,44 +78,7 @@ namespace qrgen {
 		std::string to_String();
 	};
 
-	inline GenericGF::GenericGF(int primitive, int size, int b)
-	{
-		this->primitive = primitive;
-		this->size = size;
-		this->geneBase = b;
-
-		expTab.resize(size);
-		logTab.resize(size);
-
-		/*calculate all integer in Galois field */
-
-		int x = 1;
-		int alpha = 2;//the generator alpha is 2
-
-					  // alpha^2 % size
-		for (int i = 0; i < size; i++) {
-			expTab[i] = x;
-			x *= 2;
-			x = x >= size ? (x^primitive)&(size - 1) : x;
-		}
-
-		for (int i = 0; i < size - 1; i++) logTab[expTab[i]] = i;	//logTable[0] == 0 but this should never be used
-	}
-
-	std::string qrgen::GenericGF::to_String()
-	{
-		char ch[8];
-		sprintf(ch, "%X", primitive);
-		std::string str(ch);
-		return "GF(0x" + str + "," + std::to_string(size) + ")";
-	}
-
-	const qrgen::GenericGF qrgen::GenericGF::AZTEC_DATA_12(0x1069, 4096, 1);
-	const qrgen::GenericGF qrgen::GenericGF::AZTEC_DATA_10(0x409, 1024, 1);
-	const qrgen::GenericGF qrgen::GenericGF::AZTEC_DATA_6(0x43, 64, 1);
-	const qrgen::GenericGF qrgen::GenericGF::AZTEC_PARAM(0x13, 16, 1);
-	const qrgen::GenericGF qrgen::GenericGF::QR_CODE_FIELD_256(0x011D, 256, 0);
-
+	
 }
 
 #endif // !GENERICGF_H

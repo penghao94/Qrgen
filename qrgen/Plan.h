@@ -13,6 +13,8 @@
 #include "Level.h"
 #include "Mask.h"
 #include "Pixel.h"
+#include "QRCode.h"
+#include "EncodeInterface.h"
 namespace qrgen{
 
 	class Plan{
@@ -71,6 +73,8 @@ namespace qrgen{
 
 		/*combine information*/
 		static Plan* newPlan(Version* v, LEVEL l, Mask* m);
+
+		static QRCode encode(Plan *plan, Encoding &encode1,Encoding &encode2);
 	private:
 		/*Set position box*/
 		static void setPosBox(std::vector<std::vector<Pixel>>& pixels, int x, int y);
