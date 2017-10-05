@@ -24,7 +24,7 @@ namespace qrgen {
 	*/
 	class RSencoder final {
 	private:
-		GenericGF field;
+		GenericGF *field;
 		std::vector<GenericGFPoly*> cacheGen;
 
 		/* return the last Generator*/
@@ -33,7 +33,7 @@ namespace qrgen {
 	public:
 		/*Construct a Reed Solomon encoder */
 		qrgen::RSencoder::RSencoder() {};
-		RSencoder(GenericGF field);
+		RSencoder(GenericGF *field);
 
 		/*encode*/
 		void encode(std::vector<int> &E, int ecBytes);

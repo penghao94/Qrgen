@@ -15,7 +15,6 @@
 #include<vector>
 #include<string>
 #include<algorithm>
-#include "GFObject.h"
 #include "Property.h"
 #include "Pixel.h"
 #include "PixelInfo.h"

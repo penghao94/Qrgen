@@ -90,7 +90,7 @@ bool qrgen::BitBlock::canSet(int index, uint8_t value)
 			continue;
 		
 		for (int k = 0; k < maskMatrix[i].size(); k++)
-			maskMatrix[i][k]= target[k];
+			maskMatrix[i][k] ^= target[k];
 	}
 
 	// Found a row with bit #bi == 1 and cut that bit from all the others.

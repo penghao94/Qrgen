@@ -12,6 +12,4 @@ namespace qrgen {
 		int offset;
 		int priority;
 	};
-
-	void pixelOrder(PixelOrder &po, int offset, int priority) { po.offset = offset; po.priority = priority; }
 }

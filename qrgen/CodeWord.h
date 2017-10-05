@@ -6,15 +6,23 @@
 // v. 2.0. If a copy of the MPL was not distributed with this file, You can 
 // obtain one at http://mozilla.org/MPL/2.0/.
 #pragma once
-#ifndef QRCODES_H
-#define QRCODES_H
-#include<vector>
-#include "Pixel.h"
+#ifndef CODEWORD_H_
+#define CODEWORD_H_
+
 namespace qrgen {
-	struct QRCode
-	{
-		std::vector<uint8_t>  bytes;
-		std::vector<std::vector<Pixel>> pixels;
+	/*
+	This object is used to create a table of code word to maintain if  a pixel replaced in this code word
+	if true, all pixels in this code word will obtain the greatest priority
+	*/
+	class CodeWord {
+	private:
+		bool is_invert = false;
+	public:
+		void setTrue() { is_invert = true; }
+		bool getStatus() { return is_invert; }
 	};
 }
-#endif // !QRCODES_H
+
+#endif // !PIXELINVERT_H_
+
+

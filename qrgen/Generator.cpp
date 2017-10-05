@@ -115,7 +115,7 @@ qrgen::QRCode qrgen::Generator::encode()
 	int num_dataBytes_block = plan->getdBytesNum() / plan->getBlocksNum();// number of data bytes per block
 	int num_checkBytes_block = plan->getcBytesNum() / plan->getBlocksNum();//number of check bytes per block
 	int num_extraBytes = plan->getdBytesNum() - num_dataBytes_block*plan->getBlocksNum();//number of extra bytes
-	RSencoder encoder(gfobj::QR_CODE_FIELD_256); //Reed Solomon encoder
+	RSencoder encoder(new qrgen::GenericGF(0x011D, 256, 0)); //Reed Solomon encoder
 
 	/*Build information about pixels,indexed by data/check bit number*/
 	std::vector<PixelInfo> pixel_offset((plan->getdBytesNum() + plan->getcBytesNum()) * 8);
@@ -210,7 +210,7 @@ qrgen::QRCode qrgen::Generator::encode()
 			/*Can edit [low,high) and checksum bits to hit target. Determine which ones to try first*/
 			std::vector<PixelOrder> order((high - low) + num_checkBytes_block * 8);
 
-			for (int i = 0; i < order.size(); i++)	pixelOrder(order[i], 0, 0);
+			for (int i = 0; i < order.size(); i++)	order[i] = { 0, 0 };
 
 			for (int i = low; i < high; i++)  order[i - low].offset = data_offset + i;
 			for (int i = 0; i < num_checkBytes_block * 8; i++)  order[high - low + i].offset = plan->getdBytesNum() * 8 + check_offset + i;

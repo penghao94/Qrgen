@@ -36,7 +36,7 @@ namespace qrgen {
 
 		int getSize() { return size; }//return size
 
-		Bytes getBits() { assert(size % 8 != 0); return bits; }//return bits
+		Bytes getBits() {  return bits; }//return bits
 
 		bool get(int i) { return (bits[i / 8] & (1 << (7 - i & 0x07))) != 0; }// return is 1 or not at index i
 
@@ -54,7 +54,7 @@ namespace qrgen {
 	 */
 		void write(int v, int numBits);
 
-		void pad(int n);//add padding bound with n size
+		void pad(int n);//add padding  with n size
 
 		/**
 		*Generate Reed Solomon Check bytes and append at the end of date bytes

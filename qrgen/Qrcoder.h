@@ -6,15 +6,22 @@
 // v. 2.0. If a copy of the MPL was not distributed with this file, You can 
 // obtain one at http://mozilla.org/MPL/2.0/.
 #pragma once
-#ifndef QRCODES_H
-#define QRCODES_H
-#include<vector>
-#include "Pixel.h"
+#ifndef QRCODER_H_
+#define QRCODER_H_
+
+#include <string>
+#include "Raw.h"
+#include "RSUtil.h"
+#include "Bits.h"
+#include "Plan.h"
+
 namespace qrgen {
-	struct QRCode
-	{
-		std::vector<uint8_t>  bytes;
-		std::vector<std::vector<Pixel>> pixels;
-	};
+	typedef std::vector<std::vector<qrgen::Pixel>> MatrixP;
+
+	/*Get minimal version size for data */
+	Version * getMinVersion(std::string &text, LEVEL level,Bits &bits);
+	MatrixP encode(Bits&bits,Version *version, LEVEL level, Mask *mask);
 }
-#endif // !QRCODES_H
+#endif // !QRCODER_H_
+
+

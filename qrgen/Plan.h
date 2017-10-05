@@ -79,8 +79,6 @@ namespace qrgen{
 		/*Set position box*/
 		static void setPosBox(std::vector<std::vector<Pixel>>& pixels, int x, int y);
 
-		
-
 		/*Set align box*/
 		static void setAlignBox(std::vector<std::vector<Pixel>>&pixels, int x, int y);
 	};

@@ -17,9 +17,9 @@ namespace qrgen{
 
 	/**
 	*
-	* ----------------------------------------------------------------------------------
-	* | 26bits for offset | 4bits for Role | 1bit for invert | 1bit for black or white |
-	* ----------------------------------------------------------------------------------
+	* ---------------------------------------------------------------------------------------------------------
+	* | 18bits for offset|8 bit for block number | 4bits for Role | 1bit for invert | 1bit for black or white |
+	* ---------------------------------------------------------------------------------------------------------
 	*
 	*/
 
@@ -59,11 +59,14 @@ namespace qrgen{
 
 		void setPixel(int v){data= (data >> 1 << 1) | (v & 0x01); }
 
+		/*bit block getter and setter*/
+		int getBlockIndex() { return (data >> 6) & 0xff; }
+		void setBlockIndex(int num) { data = data >> 14 << 14 | (num << 6) | (data & 0x3f); }
 
 		/*offset getter and setter*/
-		int getOffset(){ return data >> 6; }
+		int getOffset(){ return data >> 14; }
 
-		void setOffset(int v){ data = (v << 6) | (data & 0x03f); }
+		void setOffset(int v){ data = (v << 14) | (data & 0x3f); }
 
 		/*pixel role getter and setter*/
 		PixelRole getPixelRole(){ return (PixelRole)((data >> 2) & 0x0f); }

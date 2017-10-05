@@ -2,7 +2,7 @@
 
 
 
-qrgen::GenericGFPoly::GenericGFPoly(qrgen::GenericGF field, std::vector<int>& coef)
+qrgen::GenericGFPoly::GenericGFPoly(qrgen::GenericGF *field, std::vector<int>& coef)
 {
 	assert(!(coef.size() == 0) && "Illegal Argument Exception!!!");
 
@@ -43,7 +43,7 @@ int qrgen::GenericGFPoly::evaluateAt(const int a)
 	}
 
 	int result = coeff[0];
-	for (int c : coeff) result = GenericGF::add_or_sub(field.multiply(a, result), c);
+	for (int c : coeff) result = GenericGF::add_or_sub(field->multiply(a, result), c);
 	return result;
 }
 
@@ -79,7 +79,7 @@ qrgen::GenericGFPoly * qrgen::GenericGFPoly::multiply(const int scalar)
 
 	int size = coeff.size();
 	std::vector<int> product(size);
-	for (int i = 0; i < size; i++) product[i] = field.multiply(coeff[i], scalar);
+	for (int i = 0; i < size; i++) product[i] = field->multiply(coeff[i], scalar);
 
 	return new GenericGFPoly(field, product);
 }
@@ -101,7 +101,7 @@ qrgen::GenericGFPoly * qrgen::GenericGFPoly::multiply(qrgen::GenericGFPoly * oth
 	{
 		int ac = acoeff[i];
 		for (int j = 0; j < bsize; j++) {
-			product[i + j] = qrgen::GenericGF::add_or_sub(product[i + j], field.multiply(ac, bcoeff[j]));
+			product[i + j] = qrgen::GenericGF::add_or_sub(product[i + j], field->multiply(ac, bcoeff[j]));
 		}
 	}
 	return new GenericGFPoly(field, product);
@@ -115,7 +115,7 @@ qrgen::GenericGFPoly * qrgen::GenericGFPoly::multiply_by_monomial(const int d, c
 
 	int size = coeff.size();
 	std::vector<int> product(size + d);
-	for (int i = 0; i < size; i++) product[i] = field.multiply(coeff[i], c);
+	for (int i = 0; i < size; i++) product[i] = field->multiply(coeff[i], c);
 
 	
 	return new GenericGFPoly(field, product);
@@ -129,32 +129,18 @@ std::vector<qrgen::GenericGFPoly*> qrgen::GenericGFPoly::divide(qrgen::GenericGF
 	GenericGFPoly *qut = getZero();
 	GenericGFPoly *rem = this;
 	int denomin = other->getCoeff(other->getDegree());
-	std::cout <<"deno:"<< denomin << std::endl;
-	int inverse_denomin = field.inverse(denomin);
-	std::cout <<"inv:" <<inverse_denomin << std::endl;
-
-	std::cout << "Remcoeff: ";
-	for (auto i : (rem->getCoeff())) std::cout << i << " ";
-	std::cout << std::endl;
+	int inverse_denomin = field->inverse(denomin);
 
 	while (rem->getDegree() >= other->getDegree() &&!( rem->isZero())) {
  		int degreeDiff = rem->getDegree() - other->getDegree();
-		std::cout <<"diff:"<< degreeDiff << std::endl;
-		int scale = field.multiply(rem->getCoeff(rem->getDegree()), inverse_denomin);
-		std::cout << "scale:" << scale << std::endl;
+		
+		int scale = field->multiply(rem->getCoeff(rem->getDegree()), inverse_denomin);
+		
 		GenericGFPoly *term = other->multiply_by_monomial(degreeDiff, scale);
-		std::cout << "term:  ";
-		for (auto i : (term->getCoeff())) std::cout << i << " ";
-		std::cout << std::endl;
 		GenericGFPoly *iter_qut = buildMonomial(degreeDiff, scale);
-		std::cout << "itor:  ";
-		for (auto i : (iter_qut->getCoeff())) std::cout << i << " ";
-		std::cout << std::endl;
+
 		qut = qut->add_or_sub(iter_qut);
 		rem = rem->add_or_sub(term);
-		for (auto i : (qut->getCoeff())) std::cout << "qut:" << i << std::endl;
-		for (auto i : (rem->getCoeff())) std::cout << "rem:" << i << std::endl;
-		
 	}
 	return std::vector<GenericGFPoly*>{qut, rem};
 }
@@ -185,7 +171,7 @@ std::string qrgen::GenericGFPoly::to_string()
 			else if (index > 0) str += "+";
 
 			if (d == 0 || c != 1) {
-				int ap = field.log(c);
+				int ap = field->log(c);
 
 				if (ap == 0) str += "1";
 				else if (ap == 1) str += "a";

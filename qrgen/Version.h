@@ -12,43 +12,29 @@
 #include "Level.h"
 #include <vector>
 namespace qrgen{
-	class Version{
+
+	/*templete of Version Level Information*/
+	struct VerLvlInfo
+	{
+		int num_of_block;		//number of blocks
+		int cbytes_pre_block;	// number of check bytes pre block
+	};
+
+	/*templete of Version informations*/
+	struct VerInfo
+	{
+		int apos;
+		int stride;
+		int bytes;
+		int pattern;
+		std::vector<VerLvlInfo> lvlInfos;
+	};
+	class Version {
 	public:
-		
-
-		/*templete of Version Level Information*/
-		class VerLvlInfo final
-		{
-		public:
-			int num_of_block;		//number of blocks
-			int cbytes_pre_block;	// number of check bytes pre block
-		public:
-			VerLvlInfo(int nb, int cb){ num_of_block = nb; cbytes_pre_block = cb; }
-
-		};
-
-		/*templete of Version informations*/
-
-		class VerInfo final{
-		public:
-			int apos;
-			int stride;
-			int bytes;
-			int pattern;
-			std::vector<VerLvlInfo> lvlInfos;
-
-			VerInfo(int apos, int stride, int bytes, int pattern, std::vector<VerLvlInfo> lvlInfos){
-				this->apos = apos;
-				this->stride = stride;
-				this->bytes = bytes;
-				this->pattern = pattern;
-				this->lvlInfos = lvlInfos;
-			}
-		};
-
 		const static int MIN_VERSION = 1;
 		const static int MAX_VERSION = 40;
-	    static  std::vector<VerInfo> VERSION_INFOS;
+		static bool _init;
+		static std::vector<VerInfo> VERSION_INFOS;
 	private:
 		int version;
 
@@ -63,6 +49,8 @@ namespace qrgen{
 
 		/* returns the number of data bytes that can be stored in a QR code with the given version and level*/
 		int dataBytes(LEVEL l);
+
+		static bool init();
 	};
 
 }

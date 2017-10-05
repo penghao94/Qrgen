@@ -6,39 +6,37 @@
 #include <algorithm>
 #include <climits>
 #include <cmath>
-
+#include <iostream>
 typedef std::vector<std::vector<qrgen::Pixel>> MatrixP;
 typedef std::vector<qrgen::Pixel>  VectorP;
 
 qrgen::Plan* qrgen::Plan::verPlan(qrgen::Version* v){
-	using namespace qrgen;
 
 	Plan* p=new Plan();
 	p->setVersion(v);
-	assert(v->getVersion() <Version::MIN_VERSION|| v->getVersion() >Version::MAX_VERSION, "Wrong qr version!!!");
+	assert(!(v->getVersion() <Version::MIN_VERSION|| v->getVersion() >Version::MAX_VERSION)&&"Wrong qr version!!!");
 
 	int size = 17 + 4 * v->getVersion();
 	MatrixP pixels(size);
 	for (int i = 0; i < size; i++) pixels[i].resize(size);
 	
-
 	/*timing position*/
 	int timingpos = 6;
 	for (int i = 0; i < size; i++){
-		Pixel pixel;
+		Pixel pixel(Pixel::PixelRole::TIMING);
 		if ((i & 0x1) == 0) pixel.orPixel(Pixel::BLACK.getPixel());
 
 		pixels[i][timingpos] = pixel;
 		pixels[timingpos][i] = pixel;
 	}
-
+	
 	//position box
 	setPosBox(pixels, 3, 3);
 	setPosBox(pixels, size - 4, 3);
 	setPosBox(pixels, 3, size - 4);
-
+   
 	//Alignment box
-	Version::VerInfo verinfo= Version::VERSION_INFOS[v->getVersion()];
+	VerInfo verinfo= Version::VERSION_INFOS[v->getVersion()];
 
 	for (int x = 4; x + 5 < size;) {
 		for (int y = 4; y + 5 < size;) {
@@ -58,7 +56,7 @@ qrgen::Plan* qrgen::Plan::verPlan(qrgen::Version* v){
 		else 
 			x += verinfo.stride;
 	}
-
+	
 	//version pattern
 	int pattern = verinfo.pattern;
 	if (pattern != 0) {
@@ -75,7 +73,8 @@ qrgen::Plan* qrgen::Plan::verPlan(qrgen::Version* v){
 			}
 		}
 	}
-
+	
+	/*I do not know what fuck it is*/
 	Pixel pixel(Pixel::PixelRole::UNUSED);
 	pixel.orPixel(Pixel::BLACK.getPixel());
 	pixels[size - 8][8] = pixel;
@@ -141,7 +140,7 @@ void qrgen::Plan::formatPlan(Plan* p, LEVEL l, Mask *m){
 
 void qrgen::Plan::lvlPlan(Plan* p, Version *v, LEVEL l){
 
-	Version::VerInfo verinfo= Version::VERSION_INFOS[v->getVersion()];//Version information
+	VerInfo verinfo= Version::VERSION_INFOS[v->getVersion()];//Version information
 	int num_blocks = verinfo.lvlInfos[l].num_of_block;// number of blocks
 	int num_cbytes = verinfo.lvlInfos[l].cbytes_pre_block;//number of check bytes per block
 	int num_dbytes = (verinfo.bytes - num_blocks*num_cbytes) / num_blocks;//number of data bytes per block
@@ -149,7 +148,7 @@ void qrgen::Plan::lvlPlan(Plan* p, Version *v, LEVEL l){
 
 	int dataBits = (num_dbytes*num_blocks + num_extra) * 8; //data bits
 	int checkBits = num_cbytes*num_blocks * 8;// check data bits
-
+	
 	p->setBlocksNum(num_blocks);
 	p->setdBytesNum(verinfo.bytes - num_cbytes*num_blocks);
 	p->setcBytesNum(num_cbytes*num_blocks);
@@ -179,25 +178,31 @@ void qrgen::Plan::lvlPlan(Plan* p, Version *v, LEVEL l){
 
 		//The last few blocks have an extra data byte(8 pixels).
 		int dbytes = num_dbytes;
-		if (i > num_blocks - num_extra) dbytes++;
+		if (i >=(num_blocks - num_extra)) dbytes++;
 
 		VectorP dataBlock(dbytes * 8);
 		dataList[i].assign(data.begin() + dataIndex, data.begin() + dataIndex + dbytes * 8);
+		for (int j = 0; j < dataList[i].size(); j++) dataList[i][j].setBlockIndex(i);
+
 		checkList[i].assign(check.begin() + checkIndex, check.begin() + checkIndex + num_cbytes * 8);
+		for (int j = 0; j < checkList[i].size(); j++) checkList[i][j].setBlockIndex(i);
 		
 		dataIndex += 8 * dbytes;
 		checkIndex += 8 * num_cbytes;
-		assert(dataIndex != dataBits || checkIndex != checkBits);
+		
 	}
 	
-	//build up bit sequence,taking first byte of each block, then second byte, and so on. Then checksums.
+	
+	assert(!(dataIndex != dataBits || checkIndex != checkBits) && "Build data/check block error");
+
+	//build up bit sequence,taking first byte of each block, then second byte, and so on. Then checksums.http://www.pclviewer.com/rs2/qrtopology.hmt
 
 	VectorP bits;
 
 	int bitIndex = 0;
 
 	for (int i = 0; i < num_dbytes + 1; i++) {
-		for (int j = 0; j < num_blocks; j++) {
+		for (int j = 0; j < dataList.size(); j++) {
 			if (i * 8 < dataList[j].size()) {
 				bits.insert(bits.begin() + bitIndex, dataList[j].begin() + i * 8, dataList[j].begin() + (i + 1) * 8);
 				bitIndex += 8;
@@ -206,13 +211,15 @@ void qrgen::Plan::lvlPlan(Plan* p, Version *v, LEVEL l){
 	}
 
 	for (int i = 0; i < num_cbytes; i++) {
-		for (int j = 0; j < num_blocks; i++) {
-			bits.insert(bits.begin() + bitIndex, checkList[j].begin() + i * 8, checkList[j].begin() + (i + 1) * 8);
-			bitIndex += 8;
+		for (int j = 0; j < checkList.size(); j++) {
+			if (j * 8 < checkList[j].size()) {
+				bits.insert(bits.begin() + bitIndex, checkList[j].begin() + i * 8, checkList[j].begin() + (i + 1) * 8);
+				bitIndex += 8;
+			}
 		}
 	}
 
-	assert(bitIndex != bits.size());
+	assert(!(bitIndex != bits.size())&&"copy to bit error!!!");
 
 	//Sweep up pair of columns, then down,assigning to right then left pixel, Repeat.
 
@@ -220,8 +227,8 @@ void qrgen::Plan::lvlPlan(Plan* p, Version *v, LEVEL l){
 	VectorP src;
 	src.swap(bits);
 	src.insert(src.begin()+bitIndex,7,Pixel(Pixel::PixelRole::EXTRA));
-
 	int srcIndex = 0;
+
 	for (int x = size; x > 0;) {
 		for (int y = size - 1; y >= 0; y--) {
 
@@ -239,8 +246,8 @@ void qrgen::Plan::lvlPlan(Plan* p, Version *v, LEVEL l){
 
 			if ((p->pixels)[y][x - 1].getPixelRole() == 0)
 				(p->pixels)[y][x - 1] = src[srcIndex++];
-
-			if ((p->pixels)[y][x - 2].getPixelRole() == 0)
+			
+			if ((p->pixels)[y][x - 2].getPixelRole() == 0) 
 				(p->pixels)[y][x - 2] = src[srcIndex++];
 		}
 		x -= 2;
@@ -278,7 +285,7 @@ qrgen::Plan * qrgen::Plan::newPlan(Version* v, LEVEL l, Mask* m)
 	return p;
 }
 
-qrgen::QRCode qrgen::Plan::encode(Plan * plan, Encoding & encode1, Encoding & encode2)
+qrgen::QRCode qrgen::Plan:: encode(Plan * plan, Encoding & encode1, Encoding & encode2)
 {
 	Bits bits;
 	std::string err = encode1.validate();
@@ -307,7 +314,7 @@ void qrgen::Plan::setPosBox(std::vector<VectorP>&pixels, int x, int y){
 
 	//position box https://github.com/nayuki/QR-Code-generator
 	for (int i = -4; i <= 4; i++){
-		for (int j = -4; j < 4; j++){
+		for (int j = -4; j <=4; j++){
 			int dist = std::max(std::abs(i), std::abs(j));// Chebyshev/infinity norm
 			int dx = x + j, dy = y + i;
 			if (0 <= dx && dx < int(pixels.size()) && 0 <= dy && dy < int(pixels.size()))

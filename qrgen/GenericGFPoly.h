@@ -26,7 +26,7 @@ namespace qrgen {
 	*/
 	class  GenericGFPoly final {
 	public:
-		GenericGF field;
+		GenericGF *field;
 		std::vector<int> coeff;
 		
 	public:
@@ -38,7 +38,7 @@ namespace qrgen {
 		* or if leading coefficient is 0 and this is not a
 		* constant polynomial (that is, it is not the monomial "0")
 		*/
-		GenericGFPoly(qrgen::GenericGF field, std::vector<int> &coef);
+		GenericGFPoly(qrgen::GenericGF *field, std::vector<int> &coef);
 		~GenericGFPoly() { coeff.clear(); coeff.swap(std::vector<int>()); }
 
 		GenericGFPoly * getZero();
@@ -52,7 +52,7 @@ namespace qrgen {
 		std::vector<int> getCoeff() { return coeff; }
 
 		/*return degree of of this polynomial */
-		int getDegree() { return coeff.size()-1; }
+		int getDegree() { return static_cast<int>(coeff.size())-1; }
 		
 		/*return if this polynomial is the monomial "0"*/
 		bool isZero() { return coeff[0] == 0; }

@@ -2,6 +2,7 @@ add_library( qrgen
 Alpha.h
 Bits.h
 BitBlock.h
+CodeWord.h
 Encodeinterface.h
 Generator.h
 GenericGF.h
@@ -10,7 +11,9 @@ Level.h
 Mask.h
 Number.h
 Pixel.h
+PixelInfo.h
 PixelOrder.h
+PixelProperty.h
 Plan.h
 Property.h
 QRCode.h
@@ -22,6 +25,8 @@ Version.h
 Alpha.cpp
 BitBlock.cpp
 Bits.cpp
+GenericGF.cpp
+GenericGFPoly.cpp
 Generator.cpp
 Number.cpp
 Pixel.cpp
