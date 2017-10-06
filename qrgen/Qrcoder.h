@@ -10,6 +10,8 @@
 #define QRCODER_H_
 
 #include <string>
+#include<sstream>
+#include<fstream>
 #include "Raw.h"
 #include "RSUtil.h"
 #include "Bits.h"
@@ -21,6 +23,7 @@ namespace qrgen {
 	/*Get minimal version size for data */
 	Version * getMinVersion(std::string &text, LEVEL level,Bits &bits);
 	MatrixP encode(Bits&bits,Version *version, LEVEL level, Mask *mask);
+	std::string toSvgString(MatrixP &pixels, int border);
 }
 #endif // !QRCODER_H_
 

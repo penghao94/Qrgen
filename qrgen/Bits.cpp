@@ -55,14 +55,11 @@ void qrgen::Bits::pad(int n)
 void qrgen::Bits::addCheckBytes(Version * ver, LEVEL lvl)
 {
 	int num_dBytes = ver->dataBytes(lvl);
-	if (size < num_dBytes * 8)	
-		pad(num_dBytes * 8 - size);
-	assert(!(size != num_dBytes * 8) && "qrcode has too mush data");
 
 	VerInfo verinfo = Version::VERSION_INFOS[ver->getVersion()];
 	VerLvlInfo lvlinfo = verinfo.lvlInfos[lvl];
 	int npb_dBytes = num_dBytes / lvlinfo.num_of_block;
-	int num_extras = npb_dBytes % lvlinfo.num_of_block;
+	int num_extras = num_dBytes % lvlinfo.num_of_block;
 
 	RSencoder rs(new qrgen::GenericGF(0x011D, 256, 0));
 
@@ -70,8 +67,9 @@ void qrgen::Bits::addCheckBytes(Version * ver, LEVEL lvl)
 	for (int i = 0; i < lvlinfo.num_of_block; i++) {
 		if (i == lvlinfo.num_of_block - num_extras)
 			npb_dBytes++;
-		
+
 		Bytes checkBytes = geneECBytes(rs, bits, dataIndex, npb_dBytes, lvlinfo.cbytes_pre_block);
+		dataIndex += npb_dBytes;
 		append(Bits(checkBytes, lvlinfo.cbytes_pre_block * 8)); 
 	}
 	assert(!(size / 8 != verinfo.bytes) && "internal error");

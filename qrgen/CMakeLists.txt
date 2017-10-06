@@ -17,6 +17,7 @@ PixelProperty.h
 Plan.h
 Property.h
 QRCode.h
+Qrcoder.h
 Raw.h
 Reed_Solomon_encoder.h
 
@@ -31,6 +32,7 @@ Generator.cpp
 Number.cpp
 Pixel.cpp
 Plan.cpp
+Qrcoder.cpp
 Raw.cpp
 Reed_Solomon_encoder.cpp
 RSUtil.cpp
