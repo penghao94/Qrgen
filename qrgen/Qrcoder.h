@@ -23,7 +23,8 @@ namespace qrgen {
 	/*Get minimal version size for data */
 	Version * getMinVersion(std::string &text, LEVEL level,Bits &bits);
 	MatrixP encode(Bits&bits,Version *version, LEVEL level, Mask *mask);
-	std::string toSvgString(MatrixP &pixels, int border);
+	std::string toSvgString(std::string file,MatrixP &pixels, int border);
+	std::string toSvgStringColor(MatrixP & pixels, int border, int num_block);
 }
 #endif // !QRCODER_H_
 
