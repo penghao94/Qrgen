@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 	qrgen::RSencoder rs(new qrgen::GenericGF(0x011D, 256, 0));
 	
 	
-	string text = "3D QR code is a cool work!!";
+	string text = "QR code is a cool work!!";
 	qrgen::Bits bits;
 	qrgen::LEVEL level = qrgen::LEVEL::H;
 	qrgen::Mask * mask = new qrgen::Mask(3);

@@ -4,7 +4,6 @@ Bits.h
 BitBlock.h
 CodeWord.h
 Encodeinterface.h
-Generator.h
 GenericGF.h
 GenericGFPoly.h
 Level.h
@@ -13,7 +12,6 @@ Number.h
 Pixel.h
 PixelInfo.h
 PixelOrder.h
-PixelProperty.h
 Plan.h
 Property.h
 QRCode.h
@@ -28,7 +26,6 @@ BitBlock.cpp
 Bits.cpp
 GenericGF.cpp
 GenericGFPoly.cpp
-Generator.cpp
 Number.cpp
 Pixel.cpp
 Plan.cpp
