@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <title>二维码从入门到再入门</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:////home/swanny/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.3.5/node_modules/@shd101wyy/mume/dependencies/katex/katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      <style> 
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+.markdown-preview.markdown-preview {
+  /* Generated from 'node_modules/github-markdown-css/github-markdown.css' */
+}
+.markdown-preview.markdown-preview .vscode-body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  color: #24292e;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-c {
+  color: #6a737d;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-c1,
+.markdown-preview.markdown-preview .vscode-body .pl-s .pl-v {
+  color: #005cc5;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-e,
+.markdown-preview.markdown-preview .vscode-body .pl-en {
+  color: #6f42c1;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-smi,
+.markdown-preview.markdown-preview .vscode-body .pl-s .pl-s1 {
+  color: #24292e;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-ent {
+  color: #22863a;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-k {
+  color: #d73a49;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-s,
+.markdown-preview.markdown-preview .vscode-body .pl-pds,
+.markdown-preview.markdown-preview .vscode-body .pl-s .pl-pse .pl-s1,
+.markdown-preview.markdown-preview .vscode-body .pl-sr,
+.markdown-preview.markdown-preview .vscode-body .pl-sr .pl-cce,
+.markdown-preview.markdown-preview .vscode-body .pl-sr .pl-sre,
+.markdown-preview.markdown-preview .vscode-body .pl-sr .pl-sra {
+  color: #032f62;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-v,
+.markdown-preview.markdown-preview .vscode-body .pl-smw {
+  color: #e36209;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-bu {
+  color: #b31d28;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-ii {
+  color: #fafbfc;
+  background-color: #b31d28;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-c2 {
+  color: #fafbfc;
+  background-color: #d73a49;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-c2::before {
+  content: "^M";
+}
+.markdown-preview.markdown-preview .vscode-body .pl-sr .pl-cce {
+  font-weight: bold;
+  color: #22863a;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-ml {
+  color: #735c0f;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-mh,
+.markdown-preview.markdown-preview .vscode-body .pl-mh .pl-en,
+.markdown-preview.markdown-preview .vscode-body .pl-ms {
+  font-weight: bold;
+  color: #005cc5;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-mi {
+  font-style: italic;
+  color: #24292e;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-mb {
+  font-weight: bold;
+  color: #24292e;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-md {
+  color: #b31d28;
+  background-color: #ffeef0;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-mi1 {
+  color: #22863a;
+  background-color: #f0fff4;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-mc {
+  color: #e36209;
+  background-color: #ffebda;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-mi2 {
+  color: #f6f8fa;
+  background-color: #005cc5;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-mdr {
+  font-weight: bold;
+  color: #6f42c1;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-ba {
+  color: #586069;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-sg {
+  color: #959da5;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-corl {
+  text-decoration: underline;
+  color: #032f62;
+}
+.markdown-preview.markdown-preview .vscode-body .octicon {
+  display: inline-block;
+  vertical-align: text-top;
+  fill: currentColor;
+}
+.markdown-preview.markdown-preview .vscode-body a {
+  background-color: transparent;
+}
+.markdown-preview.markdown-preview .vscode-body a:active,
+.markdown-preview.markdown-preview .vscode-body a:hover {
+  outline-width: 0;
+}
+.markdown-preview.markdown-preview .vscode-body strong {
+  font-weight: inherit;
+}
+.markdown-preview.markdown-preview .vscode-body strong {
+  font-weight: bolder;
+}
+.markdown-preview.markdown-preview .vscode-body h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+.markdown-preview.markdown-preview .vscode-body img {
+  border-style: none;
+}
+.markdown-preview.markdown-preview .vscode-body code,
+.markdown-preview.markdown-preview .vscode-body kbd,
+.markdown-preview.markdown-preview .vscode-body pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+.markdown-preview.markdown-preview .vscode-body hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+.markdown-preview.markdown-preview .vscode-body input {
+  font: inherit;
+  margin: 0;
+}
+.markdown-preview.markdown-preview .vscode-body input {
+  overflow: visible;
+}
+.markdown-preview.markdown-preview .vscode-body [type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+.markdown-preview.markdown-preview .vscode-body * {
+  box-sizing: border-box;
+}
+.markdown-preview.markdown-preview .vscode-body input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+.markdown-preview.markdown-preview .vscode-body a {
+  color: #0366d6;
+  text-decoration: none;
+}
+.markdown-preview.markdown-preview .vscode-body a:hover {
+  text-decoration: underline;
+}
+.markdown-preview.markdown-preview .vscode-body strong {
+  font-weight: 600;
+}
+.markdown-preview.markdown-preview .vscode-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #dfe2e5;
+}
+.markdown-preview.markdown-preview .vscode-body hr::before {
+  display: table;
+  content: "";
+}
+.markdown-preview.markdown-preview .vscode-body hr::after {
+  display: table;
+  clear: both;
+  content: "";
+}
+.markdown-preview.markdown-preview .vscode-body table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+.markdown-preview.markdown-preview .vscode-body td,
+.markdown-preview.markdown-preview .vscode-body th {
+  padding: 0;
+}
+.markdown-preview.markdown-preview .vscode-body h1,
+.markdown-preview.markdown-preview .vscode-body h2,
+.markdown-preview.markdown-preview .vscode-body h3,
+.markdown-preview.markdown-preview .vscode-body h4,
+.markdown-preview.markdown-preview .vscode-body h5,
+.markdown-preview.markdown-preview .vscode-body h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.markdown-preview.markdown-preview .vscode-body h1 {
+  font-size: 32px;
+  font-weight: 600;
+}
+.markdown-preview.markdown-preview .vscode-body h2 {
+  font-size: 24px;
+  font-weight: 600;
+}
+.markdown-preview.markdown-preview .vscode-body h3 {
+  font-size: 20px;
+  font-weight: 600;
+}
+.markdown-preview.markdown-preview .vscode-body h4 {
+  font-size: 16px;
+  font-weight: 600;
+}
+.markdown-preview.markdown-preview .vscode-body h5 {
+  font-size: 14px;
+  font-weight: 600;
+}
+.markdown-preview.markdown-preview .vscode-body h6 {
+  font-size: 12px;
+  font-weight: 600;
+}
+.markdown-preview.markdown-preview .vscode-body p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+.markdown-preview.markdown-preview .vscode-body blockquote {
+  margin: 0;
+}
+.markdown-preview.markdown-preview .vscode-body ul,
+.markdown-preview.markdown-preview .vscode-body ol {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.markdown-preview.markdown-preview .vscode-body ol ol,
+.markdown-preview.markdown-preview .vscode-body ul ol {
+  list-style-type: lower-roman;
+}
+.markdown-preview.markdown-preview .vscode-body ul ul ol,
+.markdown-preview.markdown-preview .vscode-body ul ol ol,
+.markdown-preview.markdown-preview .vscode-body ol ul ol,
+.markdown-preview.markdown-preview .vscode-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+.markdown-preview.markdown-preview .vscode-body dd {
+  margin-left: 0;
+}
+.markdown-preview.markdown-preview .vscode-body code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+.markdown-preview.markdown-preview .vscode-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+.markdown-preview.markdown-preview .vscode-body .octicon {
+  vertical-align: text-bottom;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-0 {
+  padding-left: 0 !important;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-1 {
+  padding-left: 4px !important;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-2 {
+  padding-left: 8px !important;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-3 {
+  padding-left: 16px !important;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-4 {
+  padding-left: 24px !important;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-5 {
+  padding-left: 32px !important;
+}
+.markdown-preview.markdown-preview .vscode-body .pl-6 {
+  padding-left: 40px !important;
+}
+.markdown-preview.markdown-preview .vscode-body::before {
+  display: table;
+  content: "";
+}
+.markdown-preview.markdown-preview .vscode-body::after {
+  display: table;
+  clear: both;
+  content: "";
+}
+.markdown-preview.markdown-preview .vscode-body > *:first-child {
+  margin-top: 0 !important;
+}
+.markdown-preview.markdown-preview .vscode-body > *:last-child {
+  margin-bottom: 0 !important;
+}
+.markdown-preview.markdown-preview .vscode-body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+.markdown-preview.markdown-preview .vscode-body .anchor {
+  float: left;
+  padding-right: 4px;
+  margin-left: -20px;
+  line-height: 1;
+}
+.markdown-preview.markdown-preview .vscode-body .anchor:focus {
+  outline: none;
+}
+.markdown-preview.markdown-preview .vscode-body p,
+.markdown-preview.markdown-preview .vscode-body blockquote,
+.markdown-preview.markdown-preview .vscode-body ul,
+.markdown-preview.markdown-preview .vscode-body ol,
+.markdown-preview.markdown-preview .vscode-body dl,
+.markdown-preview.markdown-preview .vscode-body table,
+.markdown-preview.markdown-preview .vscode-body pre {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+.markdown-preview.markdown-preview .vscode-body hr {
+  height: 0.25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: #e1e4e8;
+  border: 0;
+}
+.markdown-preview.markdown-preview .vscode-body blockquote {
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: 0.25em solid #dfe2e5;
+}
+.markdown-preview.markdown-preview .vscode-body blockquote > :first-child {
+  margin-top: 0;
+}
+.markdown-preview.markdown-preview .vscode-body blockquote > :last-child {
+  margin-bottom: 0;
+}
+.markdown-preview.markdown-preview .vscode-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: solid 1px #c6cbd1;
+  border-bottom-color: #959da5;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #959da5;
+}
+.markdown-preview.markdown-preview .vscode-body h1,
+.markdown-preview.markdown-preview .vscode-body h2,
+.markdown-preview.markdown-preview .vscode-body h3,
+.markdown-preview.markdown-preview .vscode-body h4,
+.markdown-preview.markdown-preview .vscode-body h5,
+.markdown-preview.markdown-preview .vscode-body h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+.markdown-preview.markdown-preview .vscode-body h1 .octicon-link,
+.markdown-preview.markdown-preview .vscode-body h2 .octicon-link,
+.markdown-preview.markdown-preview .vscode-body h3 .octicon-link,
+.markdown-preview.markdown-preview .vscode-body h4 .octicon-link,
+.markdown-preview.markdown-preview .vscode-body h5 .octicon-link,
+.markdown-preview.markdown-preview .vscode-body h6 .octicon-link {
+  color: #1b1f23;
+  vertical-align: middle;
+  visibility: hidden;
+}
+.markdown-preview.markdown-preview .vscode-body h1:hover .anchor,
+.markdown-preview.markdown-preview .vscode-body h2:hover .anchor,
+.markdown-preview.markdown-preview .vscode-body h3:hover .anchor,
+.markdown-preview.markdown-preview .vscode-body h4:hover .anchor,
+.markdown-preview.markdown-preview .vscode-body h5:hover .anchor,
+.markdown-preview.markdown-preview .vscode-body h6:hover .anchor {
+  text-decoration: none;
+}
+.markdown-preview.markdown-preview .vscode-body h1:hover .anchor .octicon-link,
+.markdown-preview.markdown-preview .vscode-body h2:hover .anchor .octicon-link,
+.markdown-preview.markdown-preview .vscode-body h3:hover .anchor .octicon-link,
+.markdown-preview.markdown-preview .vscode-body h4:hover .anchor .octicon-link,
+.markdown-preview.markdown-preview .vscode-body h5:hover .anchor .octicon-link,
+.markdown-preview.markdown-preview .vscode-body h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+.markdown-preview.markdown-preview .vscode-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2em;
+  border-bottom: 1px solid #eaecef;
+}
+.markdown-preview.markdown-preview .vscode-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.5em;
+  border-bottom: 1px solid #eaecef;
+}
+.markdown-preview.markdown-preview .vscode-body h3 {
+  font-size: 1.25em;
+}
+.markdown-preview.markdown-preview .vscode-body h4 {
+  font-size: 1em;
+}
+.markdown-preview.markdown-preview .vscode-body h5 {
+  font-size: 0.875em;
+}
+.markdown-preview.markdown-preview .vscode-body h6 {
+  font-size: 0.85em;
+  color: #6a737d;
+}
+.markdown-preview.markdown-preview .vscode-body ul,
+.markdown-preview.markdown-preview .vscode-body ol {
+  padding-left: 2em;
+}
+.markdown-preview.markdown-preview .vscode-body ul ul,
+.markdown-preview.markdown-preview .vscode-body ul ol,
+.markdown-preview.markdown-preview .vscode-body ol ol,
+.markdown-preview.markdown-preview .vscode-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.markdown-preview.markdown-preview .vscode-body li {
+  word-wrap: break-all;
+}
+.markdown-preview.markdown-preview .vscode-body li > p {
+  margin-top: 16px;
+}
+.markdown-preview.markdown-preview .vscode-body li + li {
+  margin-top: 0.25em;
+}
+.markdown-preview.markdown-preview .vscode-body dl {
+  padding: 0;
+}
+.markdown-preview.markdown-preview .vscode-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: 600;
+}
+.markdown-preview.markdown-preview .vscode-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+.markdown-preview.markdown-preview .vscode-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+.markdown-preview.markdown-preview .vscode-body table th {
+  font-weight: 600;
+}
+.markdown-preview.markdown-preview .vscode-body table th,
+.markdown-preview.markdown-preview .vscode-body table td {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+.markdown-preview.markdown-preview .vscode-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+.markdown-preview.markdown-preview .vscode-body table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+.markdown-preview.markdown-preview .vscode-body img {
+  max-width: 100%;
+  box-sizing: content-box;
+  background-color: #fff;
+}
+.markdown-preview.markdown-preview .vscode-body img[align=right] {
+  padding-left: 20px;
+}
+.markdown-preview.markdown-preview .vscode-body img[align=left] {
+  padding-right: 20px;
+}
+.markdown-preview.markdown-preview .vscode-body code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27, 31, 35, 0.05);
+  border-radius: 3px;
+}
+.markdown-preview.markdown-preview .vscode-body pre {
+  word-wrap: normal;
+}
+.markdown-preview.markdown-preview .vscode-body pre > code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+.markdown-preview.markdown-preview .vscode-body .highlight {
+  margin-bottom: 16px;
+}
+.markdown-preview.markdown-preview .vscode-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+.markdown-preview.markdown-preview .vscode-body .highlight pre,
+.markdown-preview.markdown-preview .vscode-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  border-radius: 3px;
+}
+.markdown-preview.markdown-preview .vscode-body pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+.markdown-preview.markdown-preview .vscode-body .full-commit .btn-outline:not(:disabled):hover {
+  color: #005cc5;
+  border-color: #005cc5;
+}
+.markdown-preview.markdown-preview .vscode-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: solid 1px #d1d5da;
+  border-bottom-color: #c6cbd1;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #c6cbd1;
+}
+.markdown-preview.markdown-preview .vscode-body :checked + .radio-label {
+  position: relative;
+  z-index: 1;
+  border-color: #0366d6;
+}
+.markdown-preview.markdown-preview .vscode-body .task-list-item {
+  list-style-type: none;
+}
+.markdown-preview.markdown-preview .vscode-body .task-list-item + .task-list-item {
+  margin-top: 3px;
+}
+.markdown-preview.markdown-preview .vscode-body .task-list-item input {
+  margin: 0 0.2em 0.25em -1.6em;
+  vertical-align: middle;
+}
+.markdown-preview.markdown-preview .vscode-body hr {
+  border-bottom-color: #eee;
+}
+ 
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview   ">
+      <h2>二维码从入门到再入门</h2>
+<blockquote>
+<p>这是一个相当古老的项目了。</p>
+</blockquote>
+<h2 class="mume-header" id="%E5%89%8D%E5%BA%8F">前序</h2>
+
+<p>之前一直想写一个有关二维码生成器的教程，由于各种各样的原因，当然主要原因是懒，一直没有下手。最近感觉还是要做点什么，不然有种要烂尾的冲动。</p>
+<p>我之所以要写这个教程，主要是前些年有一个项目，需要用到二维码。当然网上的确已经有很多二维码生成器的版本了，但是写C和C++的还是少数，而且最坑爹的是这些人写代码都不带注释的。对于我来说，我的工作不仅仅限于生成一个二维码就完了，还需要利用二维码的一些特性对二维码进行处理，这样的话前人的代码就相当不友好了，索性我就自己造了轮子。当然我也是写了一部分注释，基本能解释每个函数是干了什么工作。但是这么做还是很难对二维码有一个整体性的认识，为了造福后人，我打算根据自己写的代码，详细的解析二维码，造福后人，避免大家趟我的坑。</p>
+<h2 class="mume-header" id="%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%9A%84%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80">二维码的理论基础</h2>
+
+<p>想要比较深入理解二维码，理解二维码的纠错算法是很必要的。</p>
+<p>二维码中使用的Reed Solomom 纠错算法是BCH码的一种，广泛用于通信，航空航天等领域。RS码具有低冗余，高纠错的特点。为什么二维码一部分缺失还能正确解码，二维码的纠错能力有多强，对于这些东西我们要知其然，也要知其所以然。</p>
+<h3 class="mume-header" id="%E6%9C%89%E9%99%90%E5%9F%9F%E7%90%86%E8%AE%BA">有限域理论</h3>
+
+<p>在正式开始讲解RS码之前，还是要补习一些数学知识 。</p>
+<p>有限域又称为伽罗瓦域(Galois Field),是仅含有限个元素的域，是由伽罗瓦于十八世纪30年代研究代数方程根式求解问题时引出。</p>
+<p>有限域的特征数必定是特征为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base"><span class="mord mathit">p</span></span></span></span>的有限域，则为某一素数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base"><span class="mord mathit">p</span></span></span></span>，因此它含的素域同构于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>Z</mi><mi>p</mi></msub></mrow><annotation encoding="application/x-tex">Z_p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="base"><span class="mord"><span class="mord mathit" style="margin-right:0.07153em;">Z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight">p</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"></span></span></span></span></span></span></span></span>。若<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>F</mi></mrow><annotation encoding="application/x-tex">F</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.13889em;">F</span></span></span></span>中元素个数为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>p</mi><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">p^n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.664392em;"></span><span class="strut bottom" style="height:0.858832em;vertical-align:-0.19444em;"></span><span class="base"><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight">n</span></span></span></span></span></span></span></span></span></span></span>元素，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base"><span class="mord mathit">n</span></span></span></span>为某一正整数。元素个数相同的有限域是同构的，通常用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi><mi>F</mi><mo>(</mo><msup><mi>p</mi><mi>n</mi></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">GF(p^n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord mathit">G</span><span class="mord mathit" style="margin-right:0.13889em;">F</span><span class="mopen">(</span><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight">n</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>表示<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>p</mi><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">p^n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.664392em;"></span><span class="strut bottom" style="height:0.858832em;vertical-align:-0.19444em;"></span><span class="base"><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight">n</span></span></span></span></span></span></span></span></span></span></span>元的有限域。</p>
+<p>在此歪个题，伽罗瓦可是个传奇数学家，死的也很有传奇性。想了解的筒子可以看<a href="https://www.douban.com/group/topic/8910122/">死于决斗的天才少年伽罗瓦</a>。</p>
+<p>在本教程里，生成有限域依靠GenericGF类。GenericGF是生成伽罗瓦域的标准操作。下面我们将参照GenericGF里的相关函数来具体学习如何生成二维码生成所需的伽罗瓦域。</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">GenericGF</span> final <span class="token punctuation">{</span>
+
+<span class="token keyword">private</span><span class="token operator">:</span>
+     <span class="token keyword">int</span> size<span class="token punctuation">;</span>
+	 <span class="token keyword">int</span> primitive<span class="token punctuation">;</span>
+     <span class="token keyword">int</span> geneBase<span class="token punctuation">;</span>
+	 std<span class="token operator">::</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> expTab<span class="token punctuation">;</span>
+     std<span class="token operator">::</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> logTab<span class="token punctuation">;</span>
+     
+<span class="token keyword">public</span><span class="token operator">:</span>
+	<span class="token function">GenericGF</span><span class="token punctuation">(</span><span class="token keyword">int</span> primitive<span class="token punctuation">,</span> <span class="token keyword">int</span> size<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>	
+<span class="token punctuation">}</span>
+</pre><p>GeneicGF 类有5个成员函数，其中前三个为构造函数传入的参数，后两个用来存储计算结果。下面我们根据具体参数来讲解二维码有限域生成。</p>
+<blockquote>
+<p>primitive 有限域的本原多项式。</p>
+</blockquote>
+<p>在有限域中除了0,1之外，其余所有的元素都是有本原多项式生成，本原多项式特征满足<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mrow><msup><mi>x</mi><mrow><msup><mn>2</mn><mi>p</mi></msup><mo>−</mo><mn>1</mn></mrow></msup><mo>+</mo><mn>1</mn></mrow><mrow><mi>P</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{x^{2^p-1}+1}{P(x)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:1.1129799999999999em;"></span><span class="strut bottom" style="height:1.6329799999999999em;vertical-align:-0.52em;"></span><span class="base"><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.1129799999999999em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.13889em;">P</span><span class="mopen mtight">(</span><span class="mord mathit mtight">x</span><span class="mclose mtight">)</span></span></span></span><span style="top:-3.15em;"><span class="pstrut" style="height:3em;"></span><span class="stretchy" style="height:0.2em;"><svg width="400em" height="0.2em" viewBox="0 0 400000 200" preserveAspectRatio="xMinYMin slice"><path d="M0 80H400000 v40H0z M0 80H400000 v40H0z"></path></svg></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathit mtight">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.0271142857142856em;"><span style="top:-3.0271142857142856em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5961142857142856em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.83456em;"><span style="top:-2.9040000000000004em;margin-right:0.1em;"><span class="pstrut" style="height:2.5em;"></span><span class="mord mathit mtight">p</span></span></span></span></span></span></span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>的余数为0，这点可能比较难以理解，但是我们可以记住二维码生成的有限域的本原多项式可以表示为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><msup><mi>x</mi><mn>8</mn></msup><mo>+</mo><msup><mi>x</mi><mn>4</mn></msup><mo>+</mo><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">P(x)=x^8+x^4+x^3+x^2+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.8141079999999999em;"></span><span class="strut bottom" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord mathit">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">8</span></span></span></span></span></span></span></span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathit">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span></span></span></span></span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathit">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathit">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mord">1</span></span></span></span>，所以primitive=0x011D，直接输入就行。</p>
+<blockquote>
+<p>size 有限域中元素的个数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>p</mi><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">p^n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.664392em;"></span><span class="strut bottom" style="height:0.858832em;vertical-align:-0.19444em;"></span><span class="base"><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight">n</span></span></span></span></span></span></span></span></span></span></span></p>
+</blockquote>
+<p>为了方便计算机计算通常<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">p=2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="base"><span class="mord mathit">p</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord">2</span></span></span></span>，且二维码的基本码子大小为8bit，所以size=256,意味着二维码生成有限域中有256个元素。</p>
+<blockquote>
+<p>expTab 储存对应幂次由本原多项式生成的元素</p>
+</blockquote>
+<p>假设expTab[i]=<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>a</mi><mi>i</mi></msup></mrow><annotation encoding="application/x-tex">a^i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.824664em;"></span><span class="strut bottom" style="height:0.824664em;vertical-align:0em;"></span><span class="base"><span class="mord"><span class="mord mathit">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.824664em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight">i</span></span></span></span></span></span></span></span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>a</mi><mi>i</mi></msup><mo>=</mo><msup><mi>p</mi><mi>i</mi></msup><mi>m</mi><mi>o</mi><mi>d</mi><mi>P</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo separator="true">,</mo><mi>i</mi><mo>&lt;</mo><msup><mn>2</mn><mi>p</mi></msup></mrow><annotation encoding="application/x-tex">a^i=p^imodP(x), i&lt;2^p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.824664em;"></span><span class="strut bottom" style="height:1.0746639999999998em;vertical-align:-0.25em;"></span><span class="base"><span class="mord"><span class="mord mathit">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.824664em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight">i</span></span></span></span></span></span></span></span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.824664em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight">i</span></span></span></span></span></span></span></span><span class="mord mathit">m</span><span class="mord mathit">o</span><span class="mord mathit">d</span><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord mathit">i</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight">p</span></span></span></span></span></span></span></span></span></span></span>，logTab 存储expTab中对应元素取对数的结果，这样做的好处是可以将有限域中元素之间乘法转为对数加法计算，减少计算量。</p>
+<blockquote>
+<p>geneBase 对应里的所罗门校验码生成式<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><msubsup><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>0</mn></mrow><mi>K</mi></msubsup><mo>(</mo><mi>x</mi><mo>−</mo><msup><mi>a</mi><mrow><mi>b</mi><mo>+</mo><mi>i</mi></mrow></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">G(x)=\prod^K_{i=0}(x-a^{b+i})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.981231em;"></span><span class="strut bottom" style="height:1.2809409999999999em;vertical-align:-0.29971000000000003em;"></span><span class="base"><span class="mord mathit">G</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∏</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.981231em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">0</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight" style="margin-right:0.07153em;">K</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29971000000000003em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathit">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">b</span><span class="mbin mtight">+</span><span class="mord mathit mtight">i</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>中的系数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.69444em;vertical-align:0em;"></span><span class="base"><span class="mord mathit">b</span></span></span></span></p>
+</blockquote>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.69444em;vertical-align:0em;"></span><span class="base"><span class="mord mathit">b</span></span></span></span>可以为0或1，但在二维码生成式中我们取通常取<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">b=0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.69444em;vertical-align:0em;"></span><span class="base"><span class="mord mathit">b</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord">0</span></span></span></span></p>
+<p>一切有限域都有加法和乘法两种运算，除此之外，GenericGF还定义了几种常用运算</p>
+<blockquote>
+<p><code>int add_or_sub(int a, int b)</code><br>
+有限域中两个元素加法计算，减法可以看做元素补的加法 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>+</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">a+b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="base"><span class="mord mathit">a</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mord mathit">b</span></span></span></span></p>
+</blockquote>
+<blockquote>
+<p><code>int exp(const int a)</code><br>
+返回expTab中第a个本原元素</p>
+</blockquote>
+<blockquote>
+<p><code>int log(const int a)</code><br>
+返回expTab中第a个本原元素的对数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi><mo>(</mo><mi>a</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">log(a)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.01968em;">l</span><span class="mord mathit">o</span><span class="mord mathit" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathit">a</span><span class="mclose">)</span></span></span></span></p>
+</blockquote>
+<blockquote>
+<p><code>int multiply(const int a, const int b)</code><br>
+返回有限域中两个元素的乘积 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>∗</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">a*b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.69444em;vertical-align:0em;"></span><span class="base"><span class="mord mathit">a</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mord mathit">b</span></span></span></span></p>
+</blockquote>
+<blockquote>
+<p><code>int inverse(const int a)</code><br>
+返回有限域中元素a的逆 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>∗</mo><msup><mi>a</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">a*a^{-1}=1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.8141079999999999em;"></span><span class="strut bottom" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="base"><span class="mord mathit">a</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathit">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord">1</span></span></span></span></p>
+</blockquote>
+<p>里的所罗门算法主要是定义在有限域多项式函数上的操作，因此还在GenericGFPoly类中定义了一些有限域多项式函数方法：</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">class</span>  <span class="token class-name">GenericGFPoly</span> final <span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+	GenericGF <span class="token operator">*</span>field<span class="token punctuation">;</span>
+	std<span class="token operator">::</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> coeff<span class="token punctuation">;</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+</pre><p>GenericGFPoly类中定义了两个成员函数，其中field代表有限域中的未知数，coeff是其系数。</p>
+<blockquote>
+<p><code>GenericGFPoly * getZero()</code><br>
+定义一个系数为0的单项式函数</p>
+</blockquote>
+<blockquote>
+<p><code>GenericGFPoly * getOne()</code><br>
+定义一个系数为1的单项式函数</p>
+</blockquote>
+<blockquote>
+<p><code>GenericGFPoly* add_or_sub(GenericGFPoly* other)</code><br>
+返回多项式和</p>
+</blockquote>
+<blockquote>
+<p><code>GenericGFPoly* multiply(const int scalar)</code><br>
+返回多项式函数与元素乘积</p>
+</blockquote>
+<blockquote>
+<p><code>GenericGFPoly* multiply(GenericGFPoly *other)</code><br>
+返回多项式函数与多项式函数乘积</p>
+</blockquote>
+<blockquote>
+<p><code>std::vector&lt;GenericGFPoly*&gt; divide(GenericGFPoly *other)</code><br>
+多项式与多项式函数除法，返回商和余数</p>
+</blockquote>
+<h3 class="mume-header" id="%E9%87%8C%E7%9A%84%E6%89%80%E7%BD%97%E9%97%A8%E7%BC%96%E7%A0%81%E7%AE%97%E6%B3%95">里的所罗门编码算法</h3>
+
+<p>介绍完有限域的概念后我们终于可以进入正题，开始介绍二维码的编码算法了。</p>
+<p>首先我们要定义一些符号在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi><mi>F</mi><mo>(</mo><msup><mn>2</mn><mi>m</mi></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">GF(2^m)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord mathit">G</span><span class="mord mathit" style="margin-right:0.13889em;">F</span><span class="mopen">(</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight">m</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>域中，定义<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>R</mi><mi>S</mi><mo>(</mo><mi>n</mi><mo separator="true">,</mo><mi>k</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">RS(n,k)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.00773em;">R</span><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="mopen">(</span><span class="mord mathit">n</span><span class="mpunct">,</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord mathit" style="margin-right:0.03148em;">k</span><span class="mclose">)</span></span></span></span>为一次标准的里的所罗门编码操作。其中符号含义如下：</p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base"><span class="mord mathit">m</span></span></span></span>　　　　　　　　  表示符号(本原元素)大小，如<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mo>=</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">m=8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base"><span class="mord mathit">m</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord">8</span></span></span></span>表示符号由８位二进制数组成<br>
+　　　<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base"><span class="mord mathit">n</span></span></span></span>　　　　　　　　　表示码块符号的长度<br>
+　　　<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.69444em;vertical-align:0em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.03148em;">k</span></span></span></span>　　　　　　　　　表示码块中信息的符号长度<br>
+　　　<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>K</mi><mo>=</mo><mi>n</mi><mo>−</mo><mi>k</mi><mo>≥</mo><mn>2</mn><mi>t</mi></mrow><annotation encoding="application/x-tex">K=n-k\geq2t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.83041em;vertical-align:-0.13597em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.07153em;">K</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord mathit">n</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mord mathit" style="margin-right:0.03148em;">k</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord">2</span><span class="mord mathit">t</span></span></span></span>　 表示校验码的符号数<br>
+　　　<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.61508em;"></span><span class="strut bottom" style="height:0.61508em;vertical-align:0em;"></span><span class="base"><span class="mord mathit">t</span></span></span></span>　　　　　　　　　 表示能够校正的错误码块字符数<br>
+　　<br>
+　　　<br>
+因此，如果我们在生成二维码时，需要生成一个<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>R</mi><mi>S</mi><mo>(</mo><mn>3</mn><mn>6</mn><mo separator="true">,</mo><mn>2</mn><mn>2</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">RS(36,22)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.00773em;">R</span><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="mopen">(</span><span class="mord">3</span><span class="mord">6</span><span class="mpunct">,</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord">2</span><span class="mord">2</span><span class="mclose">)</span></span></span></span>的里的所罗门编码，意味着这个编码块一共由36byte字符组成，其中前22byte为信息数据，后14byte为校验编码，这个编码块最多可以纠正不超过7个分散或连续符号的错误。</p>
+<p>里的所罗门编码算法实际上是计算信息多项式<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>M</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">M(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.10903em;">M</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span>，除以校验码生成多项式<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">G(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord mathit">G</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span>之后的余数多项式<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>R</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">R(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.00773em;">R</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span></p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mi>G</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mfrac><mrow><mi>M</mi><mo>(</mo><mi>x</mi><mo>)</mo><msup><mi>x</mi><mi>K</mi></msup></mrow><mrow><mi>G</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mfrac><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mo>(</mo><mn>1</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad G(x)=\frac{M(x)x^{K}}{G(x)}\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:1.5183309999999999em;"></span><span class="strut bottom" style="height:2.454331em;vertical-align:-0.936em;"></span><span class="base"><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mord mathit">G</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.5183309999999999em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathit">G</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span><span style="top:-3.15em;"><span class="pstrut" style="height:3em;"></span><span class="stretchy" style="height:0.2em;"><svg width="400em" height="0.2em" viewBox="0 0 400000 200" preserveAspectRatio="xMinYMin slice"><path d="M0 80H400000 v40H0z M0 80H400000 v40H0z"></path></svg></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathit" style="margin-right:0.10903em;">M</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mord"><span class="mord mathit">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.07153em;">K</span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span></span><br>
+信息码符多项式的一般形式为:</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mi>M</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><munderover><mo>∑</mo><mi>i</mi><mi>k</mi></munderover><msub><mi>m</mi><mi>i</mi></msub><msup><mi>x</mi><mi>i</mi></msup><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mo>(</mo><mn>2</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad M(x)=\sum^{k}_im_ix^i\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad(2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:1.8361130000000003em;"></span><span class="strut bottom" style="height:3.1137820000000005em;vertical-align:-1.277669em;"></span><span class="base"><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mord mathit" style="margin-right:0.10903em;">M</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8361130000000003em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight">i</span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3000050000000005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.03148em;">k</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.277669em;"></span></span></span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathit">m</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mord"><span class="mord mathit">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8746639999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight">i</span></span></span></span></span></span></span></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mopen">(</span><span class="mord">2</span><span class="mclose">)</span></span></span></span></span></p>
+<p>校验码生成多项式的一般形式为：</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mi>G</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>0</mn></mrow><mi>K</mi></munderover><mo>(</mo><mi>x</mi><mo>−</mo><msup><mi>a</mi><mrow><mi>b</mi><mo>+</mo><mi>i</mi></mrow></msup><mo>)</mo><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mspace width="2em"></mspace><mo>(</mo><mn>3</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad G(x)=\prod^{K}_{i=0}(x-a^{b+i})\quad\quad\quad\quad\quad\quad\quad\quad\quad\qquad(3)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:1.8283360000000002em;"></span><span class="strut bottom" style="height:3.106005em;vertical-align:-1.277669em;"></span><span class="base"><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mord mathit">G</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8283360000000002em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">0</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∏</span></span></span><span style="top:-4.3000050000000005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.07153em;">K</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.277669em;"></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathit">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">b</span><span class="mbin mtight">+</span><span class="mord mathit mtight">i</span></span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mspace qquad"></span><span class="mopen">(</span><span class="mord">3</span><span class="mclose">)</span></span></span></span></span></p>
+<p>由信息码符多项式和校验码生成多项式相除得到的余数多项式一般形式为：</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mspace width="2em"></mspace><mspace width="2em"></mspace><mspace width="2em"></mspace><mspace width="2em"></mspace><mspace width="2em"></mspace><mspace width="2em"></mspace><mspace width="2em"></mspace><mspace width="1em"></mspace><mi>R</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>0</mn></mrow><mrow><mi>K</mi><mo>−</mo><mn>1</mn></mrow></munderover><msub><mi>Q</mi><mi>i</mi></msub><mi>x</mi><mspace width="2em"></mspace><mspace width="2em"></mspace><mspace width="2em"></mspace><mspace width="2em"></mspace><mspace width="2em"></mspace><mspace width="2em"></mspace><mspace width="1em"></mspace><mspace width="1em"></mspace><mo>(</mo><mn>4</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">\qquad \qquad \qquad \qquad \qquad\qquad  \qquad\quad R(x)=\sum^{K-1}_{i=0}Q_ix\qquad \qquad \qquad \qquad \qquad \qquad \quad\quad(4)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:1.8283360000000004em;"></span><span class="strut bottom" style="height:3.1060050000000006em;vertical-align:-1.277669em;"></span><span class="base"><span class="mspace qquad"></span><span class="mspace qquad"></span><span class="mspace qquad"></span><span class="mspace qquad"></span><span class="mspace qquad"></span><span class="mspace qquad"></span><span class="mspace qquad"></span><span class="mspace quad"></span><span class="mord mathit" style="margin-right:0.00773em;">R</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8283360000000004em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">0</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.300005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.07153em;">K</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.277669em;"></span></span></span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathit">Q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mord mathit">x</span><span class="mspace qquad"></span><span class="mspace qquad"></span><span class="mspace qquad"></span><span class="mspace qquad"></span><span class="mspace qquad"></span><span class="mspace qquad"></span><span class="mspace quad"></span><span class="mspace quad"></span><span class="mopen">(</span><span class="mord">4</span><span class="mclose">)</span></span></span></span></span><br>
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>R</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">R(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.00773em;">R</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span>的阶次比<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">G(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord mathit">G</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span>小</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mspace width="2em"></mspace><mspace width="2em"></mspace><mspace width="2em"></mspace><mspace width="2em"></mspace><msup><mi>x</mi><mi>K</mi></msup><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>0</mn></mrow><mi>k</mi></munderover><msub><mi>m</mi><mi>i</mi></msub><mi>x</mi><mo>+</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>0</mn></mrow><mrow><mi>K</mi><mo>−</mo><mn>1</mn></mrow></munderover><msub><mi>Q</mi><mi>i</mi></msub><mi>x</mi><mo>=</mo><mi>x</mi><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>K</mi></munderover><mo>(</mo><mi>x</mi><mo>−</mo><msup><mi>a</mi><mrow><mi>b</mi><mo>+</mo><mi>i</mi></mrow></msup><mo>)</mo><mi>Q</mi><mo>(</mo><mi>x</mi><mo>)</mo><mspace width="2em"></mspace><mspace width="2em"></mspace><mspace width="2em"></mspace><mspace width="2em"></mspace><mo>(</mo><mn>5</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">\qquad \qquad\qquad\qquad   x^K\sum^{k}_{i=0}m_ix+\sum^{K-1}_{i=0}Q_ix=x\prod^{K}_{i=1}(x-a^{b+i})Q(x) \qquad \qquad\qquad\qquad   (5)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:1.8361130000000003em;"></span><span class="strut bottom" style="height:3.1137820000000005em;vertical-align:-1.277669em;"></span><span class="base"><span class="mspace qquad"></span><span class="mspace qquad"></span><span class="mspace qquad"></span><span class="mspace qquad"></span><span class="mord"><span class="mord mathit">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8913309999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight" style="margin-right:0.07153em;">K</span></span></span></span></span></span></span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8361130000000003em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">0</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3000050000000005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.03148em;">k</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.277669em;"></span></span></span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathit">m</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mord mathit">x</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8283360000000004em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">0</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.300005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.07153em;">K</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.277669em;"></span></span></span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathit">Q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mord mathit">x</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord mathit">x</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8283360000000002em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∏</span></span></span><span style="top:-4.3000050000000005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.07153em;">K</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.277669em;"></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathit">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">b</span><span class="mbin mtight">+</span><span class="mord mathit mtight">i</span></span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord mathit">Q</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mspace qquad"></span><span class="mspace qquad"></span><span class="mspace qquad"></span><span class="mspace qquad"></span><span class="mopen">(</span><span class="mord">5</span><span class="mclose">)</span></span></span></span></span></p>
+<p>将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>=</mo><mi>a</mi><mo separator="true">,</mo><mo>⋅</mo><mo>⋅</mo><mo>⋅</mo><mo separator="true">,</mo><msup><mi>a</mi><mi>k</mi></msup></mrow><annotation encoding="application/x-tex">x=a,\cdot\cdot\cdot,a^k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.849108em;"></span><span class="strut bottom" style="height:1.043548em;vertical-align:-0.19444em;"></span><span class="base"><span class="mord mathit">x</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord mathit">a</span><span class="mpunct">,</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord">⋅</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mord">⋅</span><span class="mpunct">,</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathit">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span>带入(5)即可获得里的所罗门码的校验方程，求解校验方程即可获得校验码符号<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>Q</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">Q_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="base"><span class="mord"><span class="mord mathit">Q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span></span></span></span></p>
+<p>用于生成里的所罗门编码的方法位于Reed_Solomon_encoder类中，具体方法如下：</p>
+<blockquote>
+<p><code>RSencoder(GenericGF *field)</code><br>
+构造一个Reed Solomen 编码器,使用filed中定义的有限域进行实例化</p>
+</blockquote>
+<blockquote>
+<p><code>void encode(std::vector&lt;int&gt; &amp;encode, int num_ecbytes)</code><br>
+校验码生成方法，输入encode串和校验符号数目，输出完整的rs编码串。</p>
+</blockquote>
+<p>为此我们可以构造一个测试用例来检测算法的正确性</p>
+<p>data={1,1,2,3,5,8,13,21}<br>
+输入 encode={1,1,2,3,5,8,13,21,0,0 }，num_ecbytes=2<br>
+输出 encode={1,1,2,3,5,8,13,21,165,177}</p>
+<p>测试代码如下：</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp">	<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;Reed_SOlomen_encode.h></span></span>
+
+	qrgen<span class="token operator">::</span>RSencoder <span class="token function">rs</span><span class="token punctuation">(</span><span class="token keyword">new</span>  qrgen<span class="token operator">::</span><span class="token function">GenericGF</span><span class="token punctuation">(</span><span class="token number">0x011D</span><span class="token punctuation">,</span><span class="token number">256</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	std<span class="token operator">::</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> test<span class="token operator">=</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">21</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+	rs<span class="token punctuation">.</span><span class="token function">encode</span><span class="token punctuation">(</span>test<span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">:</span>test<span class="token punctuation">)</span> std<span class="token operator">::</span>cout<span class="token operator">&lt;&lt;</span>i<span class="token operator">&lt;&lt;</span>std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
+</pre><p>当然，这是一个通用的里的所罗门编码生成器，除了二维码编码生成器可使用外，也可以生成其他形式的里的所罗门编码。</p>
+
+      </div>
+      
+      
+    </body>
+    
+    
+    
+    
+    
+    
+    
+  </html>
